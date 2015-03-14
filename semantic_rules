@@ -1,0 +1,88 @@
+<mainFunction> = <stmtsAndFunctionDefs>
+<stmtsAndFunctionDefs> % SAFD <stmtOrFunctionDef> <stmtAndFunctionDefs1>
+<stmtAndFunctionDefs1> = <stmtsAndFunctionDefs>
+<stmtAndFunctionDefs1> = e
+<stmtOrFunctionDef> = <stmt>
+<stmtOrFunctionDef> = <functionDef>
+<stmt> = <declarationStmt>
+<stmt> = <assignmentStmt_type1>
+<stmt> = <assignmentStmt_type2>
+<stmt> = <ifStmt>
+<stmt> = <ioStmt>
+<stmt> = <funCallStmt>
+<functionDef> % FUNDEF <parameter_list> FUNID <parameter_list> <stmtsAndFunctionDefs>
+<parameter_list> % PARAMLIST <type> ID <remainingList>
+<type> = INT 
+<type> = REAL
+<type> = STRING
+<type> = MATRIX
+<remainingList> = <parameter_list>
+<remainingList> = e
+<declarationStmt> % DECLST <type> <var_list>
+<var_list> % VL ID <more_ids>
+<more_ids> = <var_list>
+<more_ids> = e
+<assignmentStmt_type1> % AST1 <leftHandSide_singleVar> <rightHandSide_type1>
+<assignmentStmt_type2> % AST2 <leftHandSide_listVar> <rightHandSide_type2>
+<leftHandSide_singleVar> = ID
+<leftHandSide_listVar> = <var_list>
+<rightHandSide_type1> = <arithmeticExpression>
+<rightHandSide_type1> = <sizeExpression>
+<rightHandSide_type1> = <funCallStmt>
+<rightHandSide_type2> = <sizeExpression>
+<rightHandSide_type2> = <funCallStmt>
+<sizeExpression> = ID
+<ifStmt> % IFST <booleanExpression> <stmt> <otherStmts> <remainingElse>
+<remainingElse> % REMELSE <stmt> <otherStmts>
+<remainingElse> = e
+<otherStmts> % OTST <stmt> <otherStmts>
+<otherStmts> = e
+<ioStmt> = ID
+<ioStmt> = ID
+<funCallStmt> % FUNCALL FUNID <inputParameterList>
+<inputParameterList> % IPLST <var> <listVar>
+<inputParameterList> = e
+<listVar> = <inputParameterList>
+<listVar> = e
+<arithmeticExpression> % AEXP <arithmeticTerm> <arithmeticRest>
+<arithmeticRest> % ARST <operator_lowPrecedence> <arithmeticTerm> <arithmeticRest>
+<arithmeticRest> = e
+<arithmeticTerm> % ATRM <factor> <arithmeticTermRest>
+<arithmeticTermRest> % ATRST <operator_highPrecedence> <factor> <arithmeticTermRest>
+<arithmeticTermRest> = e
+<factor> = <arithmeticExpression>
+<factor> = <var>
+<operator_lowPrecedence> = PLUS
+<operator_lowPrecedence> = MINUS
+<operator_highPrecedence> = MUL
+<operator_highPrecedence> = DIV
+<booleanExpression> % BEXP <booleanExpression> <logicalOp> <booleanExpression>
+<booleanExpression> % BEXP <constrainedVars> <relationalOp> <constrainedVars>
+<booleanExpression> <booleanExpression>
+<constrainedVars> = ID
+<constrainedVars> = NUM
+<constrainedVars> = RNUM
+<var> % VR ID <matrixElement>
+<var> = NUM
+<var> = RNUM
+<var> = STR
+<var> = <matrix>
+<matrix> = <rows>
+<rows> % RWS <row> <rowsRest>
+<rowsRest> = <rows>
+<rowsRest> = e
+<row> = <rowRest>
+<rowRest> = <remainingColElements>
+<rowRest> = e
+<remainingColElements> % RCE NUM <remainingColElements>
+<remainingColElements> = e
+<matrixElement> % MELEM NUM NUM
+<matrixElement> = e
+<logicalOp> = AND
+<logicalOp> = OR
+<relationalOp> = LT
+<relationalOp> = LE
+<relationalOp> = EQ
+<relationalOp> = GT
+<relationalOp> = GE
+<relationalOp> = NE
